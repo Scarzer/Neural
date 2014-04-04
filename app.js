@@ -3,7 +3,7 @@ var express = require('express'),
     routes = require('./routes'),
     api = require('./routes/api'),
     http = require('http');
-    ftpServer = require('./routes/FTPServer');
+    ftpServer = require('./routes/FTPServer.js');
 var app = express();
 
 // Configuration

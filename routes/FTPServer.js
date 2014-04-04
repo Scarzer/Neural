@@ -1,5 +1,6 @@
 var JSFtp = require("jsftp");
 var exec = require('child_process').exec, child;
+var adapterCSVConvert = require('../adapters/AdapterCSVConvert');
 //Initialize FTP Connection
 var Ftp = new JSFtp({
     host: "ftp.ssec.wisc.edu"
@@ -110,6 +111,8 @@ function shouldUncompressFile(filename) {
         });
 }
 
-function shouldCSVifyFile(){
+shouldCSVifyFile();
 
+function shouldCSVifyFile(){
+    adapterCSVConvert.
 }
