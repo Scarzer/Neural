@@ -1,216 +1,129 @@
 'use strict';
 /* View-Controllers */
 //-------------------------------------------------------------------------------//
-//Home View Controller (executesOnStart)
+//Index Controller (executesOnStart)
 //-------------------------------------------------------------------------------//
-function HomeViewController($scope) {
-    $('.nav li').siblings('li').removeClass('active');
-    $('#homeButton').addClass('active');
-}
-//-------------------------------------------------------------------------------//
-//Work View Controller (executesOnStart)
-//-------------------------------------------------------------------------------//
-function WorkViewController($scope) {
-    $('.nav li').siblings('li').removeClass('active');
-    $('#workButton').addClass('active');
-}
-//-------------------------------------------------------------------------------//
-//Music View Controller (executesOnStart)
-//-------------------------------------------------------------------------------//
-function MusicViewController($scope) {
-    $('.nav li').siblings('li').removeClass('active');
-    $('#musicButton').addClass('active');
-}
-//-------------------------------------------------------------------------------//
-//Design View Controller (executesOnStart)
-//-------------------------------------------------------------------------------//
-function DesignViewController($scope) {
-    $('.nav li').siblings('li').removeClass('active');
-    $('#designButton').addClass('active');
-}
+function IndexController($scope,$http) {
+// $("div").hide();
 
+// $(document).ready(function(){
+//     $("div").find("img").load(function(){
+//         $("div").show();
+//     });
+// });
+}
 //-------------------------------------------------------------------------------//
-//Work View Controller Functions 
+//Home View Controller 
 //-------------------------------------------------------------------------------//
-function WorkItems($scope, $http, mySharedService) {
+function HomeClicker($scope) {
+    $scope.open = function () {
+        $('html,body').animate({ scrollTop: $('#home').offset().top - 50}, 2000);
+    }
+}
+//-------------------------------------------------------------------------------//
+//Work View Controller 
+//-------------------------------------------------------------------------------//
+function WorkClicker($scope) {
+    $scope.open = function () {
+        $('html,body').animate({ scrollTop: $('#work').offset().top - 50}, 2000);
+    }
+}
+function WorkItems($scope, $http) {
     $scope.posts = [];
-    $http({method: 'GET', url: '/api/work'}).
+    $http.get('/api/work').
         success(function (data, status, headers, config) {
             $scope.posts = data.posts;
         });
-
-    $scope.seeMoreButtonWasClicked = function (msg) {
-        mySharedService.prepForBroadcast(msg);
+    $scope.moreButtonWasClicked = function (msg, comingFrom) {
+        $('#' + comingFrom).trigger('click');
     };
-
-    $scope.$on('handleBroadcast', function () {
-        $scope.message = mySharedService.message;
-    });
 };
-
-function WorkItemsCarousel($scope, $http, mySharedService) {
-    $scope.slides = [];
-    $scope.getCarouselSlides = function (index) {
-        $scope.slides = [];
-        $http({method: 'GET', url: '/api/workgallery/' + index}).
-            success(function (data, status, headers, config) {
-                for (var i = 0; i < data.post.length; i++) {
-                    $scope.slides.push({
-                        image: data.post[i]
-                    });
-                }
-            });
+//-------------------------------------------------------------------------------//
+//Research View Controller 
+//-------------------------------------------------------------------------------//
+function ResearchClicker($scope) {
+    $scope.open = function () {
+        $('html,body').animate({ scrollTop: $('#research').offset().top - 50 }, 2000);
     }
-
-    $scope.$on('handleBroadcast', function () {
-        $scope.message = mySharedService.message;
-        $scope.getCarouselSlides($scope.message);
-    });
 }
+function ResearchItems($scope, $http) {
+    $scope.posts = [];
+    $http.get('/api/research').
+        success(function (data, status, headers, config) {
+            $scope.posts = data.posts;
+
+            //Figure out a way to split up the json so we can have an embedded ng-repeat 
+            // for (var i = 0; i < $scope.posts.length; i++) {
+            //     //Come in threes 
+            //     if (i % 3 == 0) {
+            //         var entry = $scope.posts[i];
+            //     }
+            // }
+            //alert($scope.posts);
+        });
+    // $scope.moreButtonWasClicked = function (msg, comingFrom) {
+    //     $('#'+ comingFrom).trigger('click');
+    // };
+};
 //-------------------------------------------------------------------------------//
-//Music View Controller Functions
+//Music View Controller 
 //-------------------------------------------------------------------------------//
+function MusicClicker($scope) {
+    $scope.open = function () {
+        $('html,body').animate({ scrollTop: $('#music').offset().top - 50}, 2000);
+    }
+}
+
 function SoundCloudController($scope, $http) {
     $scope.tracks = [];
-    $http({method: 'GET', url: '/api/music'}).
+    $http.get('/api/music').
         success(function (data, status, headers, config) {
             $scope.tracks = data.tracks;
         });
 }
 //-------------------------------------------------------------------------------//
-//Design View Controller Functions
+//Design View Controller 
 //-------------------------------------------------------------------------------//
-function DesignItems($scope, $http, mySharedService) {
+function DesignClicker($scope) {
+    $scope.open = function () {
+        $('html,body').animate({ scrollTop: $('#design').offset().top - 50 }, 2000);
+    }
+}
+
+function DesignItems($scope, $http) {
     $scope.posts = [];
-    $http({method: 'GET', url: '/api/design'}).
+    $http.get('/api/design').
         success(function (data, status, headers, config) {
             $scope.posts = data.posts;
         });
-
-    $scope.seeMoreButtonWasClicked = function (msg) {
-        mySharedService.prepForBroadcast(msg);
+    $scope.moreButtonWasClicked = function (msg, comingFrom) {
+        $('#' + comingFrom).trigger('click');
     };
-
-    $scope.$on('handleBroadcast', function () {
-        $scope.message = mySharedService.message;
-    });
 };
-
-function DesignItemsCarousel($scope, $http, mySharedService) {
-    $scope.slides = [];
-    $scope.getCarouselSlides = function (index) {
-        $scope.slides = [];
-        $http({method: 'GET', url: '/api/designgallery/' + index}).
-            success(function (data, status, headers, config) {
-                for (var i = 0; i < data.post.length; i++) {
-                    $scope.slides.push({
-                        image: data.post[i]
-                    });
-                }
-            });
-    }
-
-    $scope.$on('handleBroadcast', function () {
-        $scope.message = mySharedService.message;
-        $scope.getCarouselSlides($scope.message);
-    });
-}
-
 //-------------------------------------------------------------------------------//
-//Modal-Message Controller Functions
+//Contact View Controller Functions
 //-------------------------------------------------------------------------------//
-function ModalDemoCtrl($scope,$http) {
-
-    $scope.sender = ""; 
+function ContactController($scope, $http) {
+    $scope.sender = "";
     $scope.message = "";
-
-
-    $scope.open = function () {
-        $scope.shouldBeOpen = true;
+    $scope.open = function ($scope) {
+        $('#modalwerd').modal('toggle');
+        $('#loading-gif').hide();
     };
-
-    $scope.close = function () {
-        $scope.closeMsg = 'I was closed at: ' + new Date();
-        $scope.shouldBeOpen = false;
-    };
-
+    //Send to email
     $scope.send = function () {
-
-        var sender = $scope.contact.sender; 
+        $('#loading-gif').show();
+        var sender = $scope.contact.sender;
         var message = $scope.contact.message;
-
         $http.post('/api/contact', {
             name: sender,
             message: message
         }).
-        success(function(data, status, headers, config) {
-            //$location.path('/readPost/' + $routeParams.id);
-            alert('message sent');
-        });
+            success(function (data, status, headers, config) {
+                $scope.contact.sender = "";
+                $scope.contact.message = "";
+                $('#loading-gif').hide();
+                $('#modalwerd').modal('toggle');
+            });
     };
-
-    $scope.opts = {
-        backdropFade: true,
-        dialogFade: true
-    };
-
 };
-
-//
-// function AddPostCtrl($scope, $http, $location) {
-//   $scope.submitPost = function () {
-//     $http.post('/api/addPost', {
-//       title: $scope.title,
-//       text: $scope.text
-//     }).
-//     success(function(data, status, headers, config) {
-//       $location.path('/');
-//     });
-//   };
-// }
-
-// function ReadPostCtrl($scope, $http, $routeParams) {
-//   $http({method: 'GET', url: '/api/post/' + $routeParams.id}).
-//     success(function(data, status, headers, config) {
-//       $scope.post = data.post;
-//     });
-// }
-
-// function EditPostCtrl($scope, $http, $location, $routeParams) {
-//   $http({method: 'GET', url: '/api/post/' + $routeParams.id}).
-//     success(function(data, status, headers, config) {
-//       $scope.title = data.post.title;
-//       $scope.text = data.post.text;
-//     });
-
-//   $scope.editPost = function () {
-//     $http.post('/api/editPost', {
-//       id: $routeParams.id,
-//       title: $scope.title,
-//       text: $scope.text
-//     }).
-//     success(function(data, status, headers, config) {
-//       $location.path('/readPost/' + $routeParams.id);
-//     });
-//   };
-// }
-
-// function DeletePostCtrl($scope, $http, $location, $routeParams) {
-//   $http({method: 'GET', url: '/api/post/' + $routeParams.id}).
-//     success(function(data, status, headers, config) {
-//       $scope.post = data.post;
-//     });
-
-//   $scope.deletePost = function () {
-//     $http.post('/api/deletePost', {
-//       id: $routeParams.id
-//     }).
-//     success(function(data, status, headers, config) {
-//       $location.path('/');
-//     });
-//   };
-
-//   $scope.home = function () {
-//     $location.path('/');
-//   };
-// }

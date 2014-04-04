@@ -1,29 +1,28 @@
 <div class="featurette-top">
-    <h2 class="featurette-heading">Work</h2>
+    <h2 class="featurette-heading">Software</h2>
 </div>
-<div ng-controller="WorkItems">
+<div id = "home" ng-controller="WorkItems">
     <div ng-repeat="post in posts">
         <hr class="featurette-divider">
         <div class="featurette">
             <img ng-class-odd="'featurette-image pull-right'" ng-class-even="'featurette-image pull-left'"
                  ng-src="{{post.image}}" height="{{post.height}}" width="{{post.width}}">
-            <h2 class="featurette-heading">{{post.title}}<span class="muted">{{post.subtitle}}</span></h2>
+            <h2 class="featurette-heading2">{{post.title}}<span class="muted">{{post.subTitle}}</span></h2>
             <p class="lead">{{post.text}} </br>
+            <a href="{{post.linkUrl}}">{{post.linkTitle}}</a>
             <h1 class="featurette-language">{{post.language}}</h1> </p>
-            <button id="myButton" type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"
-                    ng-click="seeMoreButtonWasClicked($index)">
+            <button id="myButton" type="button" class="btn" data-toggle="modal" data-target="#myModal"
+                    ng-click="moreButtonWasClicked($index)">
                 <i class="icon-fullscreen icon-white"></i>
                 <span>More!</span>
             </button>
         </div>
     </div>
 </div>
-<div id="myModal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div ng-controller="WorkItemsCarousel">
-        <carousel interval="myInterval" class="item peopleCarouselImg">
-            <slide ng-repeat="slide in slides">
-                <img class="peopleCarouselImg" ng-src="{{slide.image}}" style="margin:auto;">
-            </slide>
-        </carousel>
-    </div>
+<div id="myModal" ng-controller="WorkItemsCarousel" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <carousel interval="myInterval" class="item peopleCarouselImg">
+        <slide ng-repeat="slide in slides">
+            <img class="peopleCarouselImg" ng-src="{{slide.image}}" style="margin:auto;">
+        </slide>
+    </carousel>
 </div>

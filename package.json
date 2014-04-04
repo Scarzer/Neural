@@ -5,6 +5,9 @@
   , "dependencies": {
       "express": "*",
       "ejs":"*",
-      "nodemailer":"*"
+      "nodemailer":"*",
+      "csv":"*",
+      "jsftp":"*",
+      "sleep":"*"
   }
 }

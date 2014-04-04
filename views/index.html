@@ -1,71 +1,56 @@
 <!DOCTYPE html>
-<html ng-app="myApp">
+<html ng-app="myApp" ng-controller="IndexController">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crae Sosa</title>
     <link rel='stylesheet' href='/stylesheets/style.css'/>
-    <link rel='stylesheet' href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css"/>
-    <link href='http://fonts.googleapis.com/css?family=Roboto:100' rel='stylesheet' type='text/css'>
+    <link rel='stylesheet' href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css"/>
+    <link href="/css/lightbox.css" rel="stylesheet"/>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:100%7COpen+Sans+Condensed:300' rel='stylesheet'
+          type='text/css'>
     <style type="text/css">
         body {
-            font-family: 'Roboto', sans-serif;
-            padding-bottom: 40px;
+            max-width: 1250px;
+            margin-left: auto;
+            margin-right: auto;
+            font-family: 'Roboto';
             color: #5a5a5a;
-            background-image: url('http://fc01.deviantart.net/fs70/f/2012/108/b/f/dark_turquoise_windows_8_bubbles_background_by_gifteddeviant-d4wkifd.png');
-            background-repeat: no-repeat;
-            background-attachment: fixed;
+            background-color: #dddddd;
+
         }
 
-        #myModal {
-            width: 900px; /* SET THE WIDTH OF THE MODAL */
-            margin: 0px 0 0 -450px; /* CHANGE MARGINS TO ACCOMODATE THE NEW WIDTH (original = margin: -250px 0 0 -280px;) */
-            background-color: #000000;
-        }
-
-        .peopleCarouselImg img {
-            width: auto;
-            height: 550px;
-            max-height: 550px;
-        }
-
-        /* CUSTOMIZE THE NAVBAR
-          -------------------------------------------------- */
-        .navbar-wrapper {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 10;
-            margin-top: 20px;
-            margin-bottom: -90px; /* Negative margin to pull up carousel. 90px is roughly margins and height of navbar. */
-        }
-
-        /* Remove border and change up box shadow for more contrast */
+            /* CUSTOMIZE THE NAVBAR
+            -------------------------------------------------- */
         .navbar-inner {
-            background-color: #2c2c2c; /* fallback color, place your own */
+            background-color: #fff; /* fallback color, place your own */
             /* Gradients for modern browsers, replace as you see fit */
-            background-image: -moz-linear-gradient(top, #333333, #222222);
-            background-image: -ms-linear-gradient(top, #333333, #222222);
-            background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#333333), to(#222222));
-            background-image: -webkit-linear-gradient(top, #333333, #222222);
-            background-image: -o-linear-gradient(top, #333333, #222222);
-            background-image: linear-gradient(top, #333333, #222222);
+            background-image: -moz-linear-gradient(top, #000, #000);
+            background-image: -ms-linear-gradient(top, #000, #000);
+            background-image: -webkit-linear-gradient(top, #000, #000);
+            background-image: -o-linear-gradient(top, #000, #000);
+            background-image: linear-gradient(top, #000, #000);
             background-repeat: repeat-x;
+            border: none;
             /* IE8-9 gradient filter */
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#333333', endColorstr='#222222', GradientType=0);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#000', endColorstr='#000', GradientType=0);
         }
 
-        /* Navbar links: increase padding for taller navbar */
+            /* Navbar links: increase padding for taller navbar */
         .navbar .nav > li > a {
             font-size: 21px;
             padding: 15px 20px;
-            color: #dddddd;
-            padding: 14px 20px 16px; /* Increase vertical padding to match navbar links */
+            color: #fff;
             text-shadow: 0 -1px 0 rgba(1, 1, 1, .5);
+            font-family: Sans-serif;
+            font-weight: 100;
         }
 
-        /* Offset the responsive button for proper vertical alignment */
-        .navbar .btn-navbar {
-            margin-top: 10px;
+        div.navbar div.navbar-inner ul.nav a:hover {
+            color: #00ffff;
+        }
+
+        .loading-gif {
+            padding: 20px;
         }
 
         .featurette-top {
@@ -74,12 +59,35 @@
         }
 
         .featurette-divider {
-            margin: 0px 0; /* Space out the Bootstrap <hr> more */
+            margin-top: 20px;
+            background-color: #ffffff;
+        }
+
+        .featurette-divider2 {
+            margin: 20px 0;
+            background-color: #ffffff;
         }
 
         .featurette {
-            color: #dddddd;
+            -moz-box-shadow: 0 0 3px #888;
+            -webkit-box-shadow: 0 0 3px #888;
+            box-shadow: 0 0 3px #888;
+            padding-left: 20px;
+            color: #2F4F4F;
+            background: rgba(255, 255, 255, 0.9);
             padding-top: 120px; /* Vertically center images part 1: add padding above and below text. */
+            overflow: hidden; /* Vertically center imas part 2: clear their floats. */
+        }
+
+        .featurette-home {
+            -moz-box-shadow: 0 0 3px #888;
+            -webkit-box-shadow: 0 0 3px #888;
+            box-shadow: 0 0 3px #888;
+            padding-left: 20px;
+            color: #2F4F4F;
+            font-size: 300px;
+            background: rgba(255, 255, 255, 0.9);
+            padding-top: 90px; /* Vertically center images part 1: add padding above and below text. */
             overflow: hidden; /* Vertically center images part 2: clear their floats. */
         }
 
@@ -96,18 +104,91 @@
             margin-left: 40px;
         }
 
-        /* Thin out the marketing headings */
+            /* Thin out the marketing headings */
         .featurette-heading {
-            color: #ffffff;
+            -moz-box-shadow: 0 0 3px #888;
+            -webkit-box-shadow: 0 0 3px #888;
+            box-shadow: 0 0 3px #888;
+            padding: 10px;
+            background: #0E778D;
+            color: white;
             font-size: 50px;
+            font-weight: 500;
+            line-height: 1;
+            letter-spacing: .05em;
+            text-align: right;
+        }
+
+        .featurette-heading2 {
+
+            color: #000;
             font-weight: 300;
+            font-size: 70px;
+            font-style: bold;
             line-height: 1;
             letter-spacing: -1px;
         }
 
-        .featurette-language {
-            font-size: 20px;
+            /* Research page*/
+        .row-fluid {
+            -moz-box-shadow: 0 0 3px #888;
+            -webkit-box-shadow: 0 0 3px #888;
+            box-shadow: 0 0 3px #888;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            background: rgba(255, 255, 255, 0.9);
         }
+
+        .company {
+            color: #000;
+            font-family: 'Open Sans Condensed', roboto, Lucida Sans Unicode;
+            line-height: 36px;
+            letter-spacing: .03em;
+
+        }
+
+        .summary {
+            color: #000;
+            font-size: 20px;
+            font-family: 'Open Sans Condensed', roboto, Lucida Sans Unicode;
+            line-height: 30px;
+            letter-spacing: .03em;
+            text-align: justify;
+        }
+
+        .date {
+            font-size: 20px;
+            font-color: #ddd;
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+
+        .lead {
+            font-size: 24px;
+            color: #000000;
+            font-family: 'Open Sans Condensed', roboto, Lucida Sans Unicode;
+            line-height: 36px;
+            letter-spacing: .03em;
+            text-align: justify;
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+
+        .muted {
+            color: #5C4033;
+        }
+
+        #modalwerd {
+            max-width: 500px; /* SET THE WIDTH OF THE MODAL */
+        }
+
+        iframe {
+            -moz-box-shadow: 0 0 3px #888;
+            -webkit-box-shadow: 0 0 3px #888;
+            box-shadow: 0 0 3px #888;
+        }
+
+
     </style>
 </head>
 <body>
@@ -120,45 +201,139 @@
                 <span class="icon-bar"></span>
             </a>
             <a class="brand" href="#"></a>
+
             <div class="nav-collapse">
                 <ul class="nav">
-                    <li id="homeButton" class="active"><a href="/home">Home</a></li>
-                    <li id="workButton"><a href="/work">Work</a></li>
-                    <li id="musicButton"><a href="/music">Music</a></li>
-                    <li id="designButton"><a href="/design">Design</a></li>
-                    <li><a ng-controller="ModalDemoCtrl" ng-click="open()">Contact
-                        <div modal="shouldBeOpen" close="close()" options="opts">
-                            <div class="modal-header">
-                                <h4>Send me a message!</h4>
-                                <input placeholder="Email" ng-model="contact.sender"></input>
-                            </div>
-                            <div class="modal-body">
-                                <form method="post" action="">
-                                    <textarea name="comments" cols="20" rows="5" placeholder="Message" ng-model="contact.message"></textarea><br>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn btn-success" ng-click="send()">Send</button>
-                            </div>
-                        </div>
-                    </a></li>
+                    <li id="homeButton" ng-controller="HomeClicker" ng-click=open()><a href="">FTP Server</a></li>
+                    <li id="workButton" ng-controller="WorkClicker" ng-click=open()><a href="">Neural Network</a></li>
+                    <li id="researchButton" ng-controller="ResearchClicker" ng-click=open()><a href="">Historical
+                        Data</a></li>
+                    <li><a ng-controller="ContactController" ng-click="open()" href="">Contact</a></li>
                 </ul>
             </div>
-            <!-- /.nav-collapse -->
         </div>
     </div>
-    <!-- /navbar-inner -->
 </div>
-<div ng-view>
+
+<div id="home" class="featurette-top">
+    <h2 class="featurette-heading">Neural Network Program</h2>
 </div>
-</body>
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.js"></script>
-<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.5.0.min.js"></script>
-<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-<script src="js/app.js"></script>
-<script src="js/services.js"></script>
-<script src="js/controllers.js"></script>
-<script src="js/filters.js"></script>
-<script src="js/directives.js"></script>
+<div class="featurette-home">
+    <!--<img class="featurette-image pull-left" src="https://dl.dropboxusercontent.com/u/2606800/prof.png">-->
+    <h2 class="featurette-heading2"><span class="muted"></span></h2>
+
+    <p class="lead">CCNY Neural Network Program
+</div>
+
+<!--<div id="work" class="featurette-top">-->
+    <!--<h2 class="featurette-heading">FTP</h2>-->
+<!--</div>-->
+<!--<div id="workitems" ng-controller="WorkItems">-->
+        <!--<div class="featurette-divider">-->
+            <!--<div class="featurette">-->
+                <!--<div ng-repeat="post in posts">-->
+
+                <!--&lt;!&ndash;<p class="lead">{{post.text}} </br>&ndash;&gt;-->
+
+
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <!--<div id="research" class="featurette-top">-->
+    <!--<h2 class="featurette-heading">Research</h2>-->
+    <!--</div>-->
+    <!--<div id="researchitems" ng-controller="ResearchItems">-->
+    <!--<div class="row-fluid">-->
+    <!--<ul class="thumbnails">-->
+    <!--<li ng-repeat ="post in posts"class="span4">-->
+    <!--<div class="thumbnail" border=>-->
+    <!--<img ng-src="{{post.image}}"-->
+    <!--alt="product name">-->
+    <!--<div class="caption">-->
+    <!--<h3 class="company">{{post.title}}</h3>-->
+    <!--<p class="summary">{{post.text}}</p>-->
+    <!--</div>-->
+
+    <!--</div>-->
+    <!--</li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <!--<div id="music" class="featurette-top">-->
+    <!--<h2 class="featurette-heading">Music</h2>-->
+    <!--</div>-->
+    <!--<br/>-->
+    <!--<div ng-controller="SoundCloudController">-->
+    <!--<div class="soundcloud" ng-repeat="track in tracks">-->
+    <!--<div>-->
+    <!--<iframe width="100%" height="166" scrolling="no" frameborder="no" src="{{track.link}}"></iframe>-->
+    <!--</div>-->
+    <!--<br/><br/>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <!--<div id="design" class="featurette-top">-->
+    <!--<h2 class="featurette-heading">Design</h2>-->
+    <!--</div>-->
+    <!--<div ng-controller="DesignItems">-->
+    <!--<div ng-repeat="post in posts">-->
+    <!--<div class="featurette-divider">-->
+    <!--<div class="featurette">-->
+    <!--<img ng-class-odd="'featurette-image pull-right'" ng-class-even="'featurette-image pull-left'"-->
+    <!--ng-src="{{post.image}}" height="{{post.height}}" width="{{post.width}}">-->
+    <!--<h2 class="featurette-heading2">{{post.title}}<span class="muted">{{post.subTitle}}</span></h2>-->
+    <!--<p class="date">{{post.date}}</p>-->
+    <!--<p class="lead">{{post.text}} </br>-->
+    <!--<a href="{{post.linkUrl}}">{{post.linkTitle}}</a>-->
+    <!--<h1 class="featurette-language">{{post.language}}</h1> </p>-->
+    <!--<div class="image-row">-->
+    <!--<button id="linkProxy" type="button" class="button button-rounded button-flat-primary"-->
+    <!--data-target="#myModal"-->
+    <!--ng-click="moreButtonWasClicked($index,post.galleryName)">-->
+    <!--<i class="icon-fullscreen icon-white"></i>-->
+    <!--<span>More!</span>-->
+    <!--</button>-->
+    <!--<div class="image-set">-->
+    <!--<a id="{{post.galleryName}}" ng-repeat="image in post.gallery" class="example-image-link"-->
+    <!--href="{{image}}" data-lightbox="{{post.galleryName}}"></a>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<h1 class="featurette-language">{{post.editor}}</h1> </p>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <!--<div id="modalwerd" ng-controller="ContactController" class="modal hide fade"-->
+    <!--aria-labelledby="myModalLabel">-->
+    <!--<div class="modal-header">-->
+    <!--<h2>Send me a message!</h2>-->
+    <!--<input placeholder="Email" ng-model="contact.sender" type="text" class="span3">-->
+    <!--<img width=30px height=30px id="loading-gif" src="/img/loading.gif">-->
+    <!--</div>-->
+    <!--<div class="modal-body">-->
+    <!--<form method="post" action="">-->
+    <!--<textarea cols="20" rows="10" class="span5" placeholder="Message" ng-model="contact.message"></textarea>-->
+    <!--</form>-->
+    <!--</div>-->
+    <!--<div class="modal-footer">-->
+    <!--<button class="button button-rounded button-flat-primary" ng-click="send()">Send</button>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <div class="featurette-top">
+        <h2 class="featurette-heading"></h2>
+    </div>
+    <head>
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+        <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+        <script src="js/lib/lightbox/lightbox-2.6.min.js"></script>
+        <script src="js/app.js"></script>
+        <script src="js/services.js"></script>
+        <script src="js/controllers.js"></script>
+        <script src="js/filters.js"></script>
+        <script src="js/directives.js"></script>
+    </head>
 </html>
