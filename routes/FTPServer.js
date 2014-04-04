@@ -6,6 +6,10 @@ var Ftp = new JSFtp({
     host: "ftp.ssec.wisc.edu"
 });
 
+function FTPServerClass(ftpSubDirectory,downloadDirectory,uncompressSetting){
+
+}
+
 var isClockPaused = false;
 //Initialize the arrays
 var arrayEven = new Array();
@@ -83,10 +87,13 @@ function shouldDownloadFile() {
             console.log('There was an error retrieving the file.');
         } else {
             console.log('Downloaded the file.');
+
+
             //Uncompress
             shouldUncompressFile(file);
         }
     });
+
 
 }
 
@@ -98,6 +105,12 @@ function shouldUncompressFile(filename) {
             if (error !== null) {
                 console.log('exec error: ' + error);
             }
+
+            //Process
+//var filename = 'sdfsdf.sdfsdfs.2123123.ssdfsdf.Z';
+            var fileNameNoExtensionArray = filename.split('.');
+            fileNameNoExtensionArray.splice(fileNameNoExtensionArray.length-1);
+            console.log(fileNameNoExtensionArray);
 
             //Post process
             if (arrayIndex < comparedArray.length) {
@@ -111,8 +124,8 @@ function shouldUncompressFile(filename) {
         });
 }
 
-shouldCSVifyFile();
-
-function shouldCSVifyFile(){
-    adapterCSVConvert.
-}
+//shouldCSVifyFile();
+//
+//function shouldCSVifyFile(){
+//    adapterCSVConvert.werdUp();
+//}
