@@ -2,6 +2,10 @@ var fs = require('fs');
 var csv = require('csv');
 var readline = require('readline');
 
+//shouldCSVify('01Apr14.14z.g15.tpwc_merged_cimss_exp_rets2_a');
+
+//function shouldCSVify(filenameNoExt) {
+
 exports.shouldCSVify = function(filenameNoExt) {
     var fullCSV = "";
     readline.createInterface({
@@ -38,7 +42,11 @@ exports.shouldCSVify = function(filenameNoExt) {
         .on('close', function () {
             csv().from.string(fullCSV)
                 .to.array(function (data) {
-                    console.log(data);
+
+
+//                    console.log(data);
+
+
                 });
         });
 };
