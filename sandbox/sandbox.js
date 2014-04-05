@@ -47,7 +47,14 @@
 //};
 
 
-var filename = 'sdfsdf.sdfsdfs.2123123.ssdfsdf.Z';
-var fileNameNoExtensionArray = filename.split('.');
-fileNameNoExtensionArray.splice(fileNameNoExtensionArray.length-1);
-console.log(fileNameNoExtensionArray);
+//var filename = 'sdfsdf.sdfsdfs.2123123.ssdfsdf.Z';
+//var fileNameNoExtensionArray = filename.split('.');
+//fileNameNoExtensionArray.splice(fileNameNoExtensionArray.length-1);
+//console.log(fileNameNoExtensionArray);
+
+//Process
+filenameOriginal = 'sdfsdf.sdfsdfs.2123123.ssdfsdf.Z';
+fileNameNoExtArray = filenameOriginal.split('.');
+fileNameNoExtArray.splice(fileNameNoExtArray.length - 1);
+var filenameNoText = fileNameNoExtArray.join('.');
+console.log(filenameNoText);

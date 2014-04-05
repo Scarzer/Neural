@@ -2,10 +2,10 @@ var fs = require('fs');
 var csv = require('csv');
 var readline = require('readline');
 
-exports.werdUp = function(something1,something2,something3) {
+exports.shouldCSVify = function(filenameNoExt) {
     var fullCSV = "";
-    var rd = readline.createInterface({
-        input: fs.createReadStream('./downloads/03Apr14.13z.g13.tpwc_merged_cimss_exp_rets2_a'),
+    readline.createInterface({
+        input: fs.createReadStream(filenameNoExt),
         output: process.stdout,
         terminal: false
     })
