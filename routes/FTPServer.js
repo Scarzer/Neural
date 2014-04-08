@@ -108,7 +108,7 @@ function FTPClass(ftpSubDirectory, downloadDirectory, uncompressBashCommand) {
                     fileNameNoExtArray.splice(fileNameNoExtArray.length - 1);
                     var filenameNoExt = fileNameNoExtArray.join('.');
                     //CSV shit - should make it tp sn or tp specific (surround with conditional)
-                    adapterCSVConvert.shouldCSVify('./'+ downloadDirectory + filenameNoExt);
+                    adapterCSVConvert.willConvertToCSV('./'+ downloadDirectory + filenameNoExt);
 
                     //Post process
                     if (arrayIndex < comparedArray.length) {
