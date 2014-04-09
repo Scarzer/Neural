@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Rectangles</title>
+    <style>
+        html, body, #map-canvas {
+            height: 100%;
+            margin: 0px;
+            padding: 0px
+        }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script src=""></script>
+    <script>
+        
+
+        // Place a marker for each location
+
+        function initialize() {
+            var map = new google.maps.Map(document.getElementById('map-canvas'), {
+                zoom: 11,
+                center: new google.maps.LatLng(33.678176, -116.242568),
+                mapTypeId: google.maps.MapTypeId.TERRAIN
+            });
+
+
+            ///
+            var myLatlng = new google.maps.LatLng(23,-108);
+            var mapOptions = {
+                zoom: 4,
+                center: myLatlng
+            }
+
+            // To add the marker to the map, use the 'map' property
+            var marker = new google.maps.Marker({
+                position: myLatlng,
+                map: map,
+                title:"Hello World!"
+            });
+
+            var rectangleArray = [];
+
+
+
+//            var spatialRes = 0.5;
+            for(var i = 0 ; i < rectangleArray.length; i++){
+                var rectangle = new google.maps.Rectangle({
+                    strokeColor: rectangleArray[i].strokeColor,
+                    strokeOpacity: rectangleArray[i].strokeOpacity,
+                    strokeWeight: rectangleArray[i].strokeWeight,
+                    fillColor: rectangleArray[i].fillColor,
+                    fillOpacity: rectangleArray[i].fillOpacity,
+                    map: map,
+                    bounds: new google.maps.LatLngBounds(
+                            new google.maps.LatLng(rectangleArray[i].lowerLat, rectangleArray[i].lowerLon),
+                            new google.maps.LatLng(rectangleArray[i].upperLat, rectangleArray[i].upperLon))
+                });
+            }
+
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+</head>
+<body>
+<div id="map-canvas"></div>
+</body>
+</html>
