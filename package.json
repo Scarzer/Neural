@@ -1,14 +1,16 @@
 {
-    "name": "website-crae"
-  , "version": "0.0.1"
-  , "private": true
-  , "dependencies": {
-      "express": "*",
-      "ejs":"*",
-      "nodemailer":"*",
-      "csv":"*",
-      "jsftp":"*",
-      "sleep":"*",
-      "numeric":"*"
+  "name": "website-crae",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "*",
+    "ejs": "*",
+    "nodemailer": "*",
+    "csv": "*",
+    "jsftp": "*",
+    "sleep": "*",
+    "numeric": "*",
+    "rbush": "*",
+    "mongoose" : "*"
   }
 }

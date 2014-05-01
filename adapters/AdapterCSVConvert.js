@@ -6,9 +6,12 @@ var numeric = require('numeric');
 var rbush  = require('rbush');
 var express = require('express');
 var app = express();
-//willConvertToCSV('05Apr14.00z.g15.tpwc_merged_cimss_exp_rets2_a');
-var spacialTree = willParseStream('testData.csv');
 
+app.use(express.static(__dirname + "/public"));
+
+
+var pointsToInsert = [];
+var spacialTree = willParseStream('testData.csv');
 var spatialRes = 0.5;
 var spatialResInv = Math.pow(spatialRes,-1);
 
@@ -18,7 +21,7 @@ function willParseStream(filenameNoExt){
     var inStream = fs.createReadStream(filenameNoExt);
     var outStream = fs.createWriteStream('/dev/null');
     var rl = readline.createInterface(inStream, outStream);
-    var tree = rbush(9,['.minLng', '.minLat', '.maxLng', '.maxLat']);
+    var tree = rbush(16,['.minLng', '.minLat', '.maxLng', '.maxLat']);
 
     rl.on('line', function(line){
         var subArr = line.trim().split(' ');
@@ -30,35 +33,21 @@ function willParseStream(filenameNoExt){
         // Toss out the first line
         if( isNaN(lng) || isNaN(lat) ) return;
         
-        var point = {
-            minLng : lng,
-            maxLng : lng,
-            minLat : lat,
-            maxLat : lat,
-            latPos : lat,
-            lonPos : lng,
-            WV1    : parseFloat(subArr[7])
-        }
-        tree.insert(point);
     });
 
     rl.on('close', function(){
         console.log("Map Area is " + tree.toJSON().bbox);
+        console.log(tree.toJSON());
         app.get('/getTable', function(req, res){
-            res.send(tree.toJSON())
+            res.send(tree.toJSON());
             res.end();
         });
+
         app.listen(3000);
-        //console.log(tree.toJSON());
         
     });
 
 }
-
-//willMakeRectangles();
-//
-//willCreateGoogleMapsObject(latAvgArray,lonAvgArray,wv1AvgArray);
-
 
 
 function willCreateGoogleMapsObject(lat,lon,data){
@@ -77,8 +66,6 @@ function willCreateGoogleMapsObject(lat,lon,data){
     }
 
     console.log(rectangleArray);
-
-
 }
 
 function GoogleMapRectangleVars(lon,lat){

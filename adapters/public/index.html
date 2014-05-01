@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Le 32~</title>
+    <style>
+        html, body, #map-canvas {
+            
+            height: 100%;
+            width : auto;
+            margin : 0px;
+            padding : 0px;
+        }
+        
+        span p{
+            display: inline-block;
+            position: relative;
+            float: left;
+        }
+        
+        #mapOptions { 
+            height: 200px;
+            width: 200px%;
+            background-color: white;
+            opacity: .85;
+            position: absolute;
+            right: 10px;
+            top: 30px;
+            z-index : 5;
+        }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+</head>
+
+<body>
+    <div id="mapOptions">
+        <p>Longitude:   <span id="centerLng"></span></p>
+        <p>Latitude:    <span id="centerLat"></span></p>
+        <p>Radius:      <span id="centerRad"></span></p>
+    </div>
+    
+    <div id="map-canvas"></div>
+    <script>
+        var markerCircles = [];
+        
+        var radius  = 10000; // 10 Kilometers!
+        
+        var map = new google.maps.Map(document.getElementById('map-canvas'), {
+            zoom: 11,
+            center: new google.maps.LatLng(33.678176, -116.242568),
+            mapTypeId: google.maps.MapTypeId.TERRAIN
+        });
+        
+        google.maps.event.addListener(map, 'idle', function(){
+            var center = map.getCenter();
+            $('#centerLng').text(center.lng());
+            $('#centerLat').text(center.lat());
+            
+            placeMarker(center);
+        });
+
+        function placeMarker(centerCoor){
+            if(markerCircles.length > 0){
+                markerCircles.pop().setMap(null);
+            }
+            
+            var marker = new google.maps.Marker({
+                position : centerCoor,
+                map: map,
+                title: 'Map Center'
+            });
+            
+            markerCircles.push(marker);
+        }
+    </script>
+
+</body>
+</html>
